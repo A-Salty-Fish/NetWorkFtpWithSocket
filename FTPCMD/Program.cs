@@ -23,7 +23,7 @@ namespace FTPCMD
             //Console.WriteLine(myFtp.DownLoadFileFromBreakPoint("hello.txt",500));
             //Console.WriteLine(myFtp.UpLoadFile("ttt.pptx", 1500));
             //Console.WriteLine(myFtp.UpLoadFileFromBreakPoint("ttt.pptx", 1500));
-            List<string> ftpFileList =  myFtp.GetFtpFileList();
+            List<string> ftpFileList = myFtp.GetFtpFileList();
             foreach (var x in ftpFileList)
             {
                 Console.WriteLine(x);
@@ -31,7 +31,7 @@ namespace FTPCMD
             //Console.WriteLine(myFtp.CloseDataSocket());
             Console.WriteLine(myFtp.Close());
 
-            //List <string> localFileList = myFtp.GetLocalFileList(@"E:\C sharp\NetWorkFtpWithSocket\FTPCMD");
+            //List<string> localFileList = myFtp.GetLocalFileList(@"E:\C sharp\NetWorkFtpWithSocket\FTPCMD");
             //foreach (var x in localFileList)
             //{
             //    Console.WriteLine(x);
