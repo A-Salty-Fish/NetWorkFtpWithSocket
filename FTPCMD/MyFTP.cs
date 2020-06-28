@@ -156,7 +156,7 @@ namespace FTPCMD
         /// <summary>
         /// 向FTP服务器上传文件
         /// </summary>
-        public string UpLoadFile(string fileName)
+        public string UpLoadFile(string fileName,int breakPoint = 0)//便于测试，加入断点，到断点则停止上传
         {
             //进入被动模式
             PassiveMode();
@@ -165,7 +165,59 @@ namespace FTPCMD
             //打开文件读取数据
             FileStream fstrm = new FileStream(fileName, FileMode.Open);
             byte[] fbytes = new byte[BufferSize];
-            int cnt = 0;//计算读取了多少文件字节
+            int sum = 0;//计算总共读取了多少文件字节
+            int num;//计算一次读取了多少文件字节
+            while ((num = fstrm.Read(fbytes, 0, BufferSize)) != 0)//没到文件末尾则循环
+            {
+                if (sum + num > breakPoint && breakPoint != 0)//如果此次读取的字节超过中断点则中断
+                {
+                    byte[] endBytes = new byte[breakPoint-sum];
+                    Array.Copy(fbytes, 0, endBytes, 0, breakPoint - sum);
+                    dataSocket.Send(endBytes);
+                    dataSocket.Close();//传输成功后关闭数据套接字
+                    GetCmdMessage();
+                    return "BreakPoint:" + breakPoint.ToString();
+                }
+                else
+                {
+                    if (num == BufferSize)//当数组满直接发送
+                        dataSocket.Send(fbytes);
+                    else//数组不满则只发送前面一部分
+                    {
+                        byte[] endBytes = new byte[num];
+                        Array.Copy(fbytes, 0, endBytes, 0, num);
+                        dataSocket.Send(endBytes);
+                        break;
+                    }
+
+                    sum += num;
+                }
+            }
+            fstrm.Close();
+            return GetCmdMessage();
+        }
+
+        /// <summary>
+        /// 断点续传：上传
+        /// </summary>
+        public string UpLoadFileFromBreakPoint(string fileName, int breakPoint)
+        {
+            //进入被动模式
+            PassiveMode();
+            //申请断点续传
+            string breakPointCMD = "REST " + breakPoint.ToString() + CRLF;
+            cmdSocket.Send(Encoding.UTF8.GetBytes(breakPointCMD));
+            GetCmdMessage();
+            //申请上传命令
+            string uplodeCMD = "STOR " + fileName + CRLF;
+            cmdSocket.Send(Encoding.UTF8.GetBytes(uplodeCMD));
+            GetCmdMessage();
+            //从断点打开文件读取数据
+            FileStream fstrm = new FileStream(fileName, FileMode.Open);
+            fstrm.Seek(breakPoint, SeekOrigin.Begin);//寻找偏移
+
+            byte[] fbytes = new byte[BufferSize];
+            int cnt ;//计算读取了多少文件字节
             while ((cnt = fstrm.Read(fbytes, 0, 1024)) != 0)//没到文件末尾则循环
             {
                 if (cnt == BufferSize)//当数组满直接发送
@@ -179,7 +231,7 @@ namespace FTPCMD
                 }
             }
             fstrm.Close();
-            return GetCmdMessage();
+            return "Finished";
         }
         /// <summary>
         /// 关闭数据套接字

@@ -5,3 +5,10 @@ E:\C sharp\FTPCMD\FTPCMD\obj\Debug\FTPCMD.csprojAssemblyReference.cache
 E:\C sharp\FTPCMD\FTPCMD\obj\Debug\FTPCMD.csproj.CoreCompileInputs.cache
 E:\C sharp\FTPCMD\FTPCMD\obj\Debug\FTPCMD.exe
 E:\C sharp\FTPCMD\FTPCMD\obj\Debug\FTPCMD.pdb
+E:\C sharp\NetWorkFtpWithSocket\FTPCMD\bin\Debug\FTPCMD.exe.config
+E:\C sharp\NetWorkFtpWithSocket\FTPCMD\bin\Debug\FTPCMD.exe
+E:\C sharp\NetWorkFtpWithSocket\FTPCMD\bin\Debug\FTPCMD.pdb
+E:\C sharp\NetWorkFtpWithSocket\FTPCMD\obj\Debug\FTPCMD.csprojAssemblyReference.cache
+E:\C sharp\NetWorkFtpWithSocket\FTPCMD\obj\Debug\FTPCMD.csproj.CoreCompileInputs.cache
+E:\C sharp\NetWorkFtpWithSocket\FTPCMD\obj\Debug\FTPCMD.exe
+E:\C sharp\NetWorkFtpWithSocket\FTPCMD\obj\Debug\FTPCMD.pdb
