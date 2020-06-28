@@ -23,6 +23,7 @@ namespace FTPCMD
         private int DataPort;
         public string UserName;
         public string PassWord;
+        public string LastMessage;
         //命令套接字与数据套接字
         private Socket cmdSocket;
         private Socket dataSocket;
@@ -34,8 +35,22 @@ namespace FTPCMD
         {
             byte[] data = new byte[BufferSize];//这里传递一个byte数组，实际上这个data数组用来接收数据
             int length = cmdSocket.Receive(data); //length返回值表示接收了多少字节的数据
-            string message = Encoding.UTF8.GetString(data, 0, length); //把接收到的数据做一个转化
-            return message;
+            LastMessage = Encoding.UTF8.GetString(data, 0, length); //把接收到的数据做一个转化
+            return LastMessage;
+        }
+        /// <summary>
+        /// 返回服务器最后返回的响应码
+        /// </summary>
+        public int GetRCode()
+        {
+            if (LastMessage != null)
+            {
+                string strCode = LastMessage.Substring(0, 3);
+                int RCode = Int32.Parse(strCode);
+                return RCode;
+            }
+            else
+                return 0;
         }
         /// <summary>
         /// 连接上IP对应的FTP服务器
@@ -251,6 +266,51 @@ namespace FTPCMD
             string message = GetCmdMessage();
             cmdSocket.Close();
             return message;
+        }
+
+        /// <summary>
+        /// 获取目录下的所有文件名,返回文件名的list
+        /// </summary>
+        public List<string> GetLocalFileList(string path)
+        {
+            var files = Directory.GetFiles(path, "*.*");
+            List<string> fileList = new List<string>();
+            foreach (var file in files)
+            {
+                string[] temp = Regex.Split(file, @"\\");
+                fileList.Add(temp[temp.Length - 1]);
+            }
+
+            return fileList;
+        }
+
+        /// <summary>
+        /// 获取Ftp服务器的所有文件名,返回文件名的list
+        /// </summary>
+        public List<string> GetFtpFileList()
+        {
+            List<string> ftpFileList = new List<string>();
+            //进入被动模式
+            PassiveMode();
+            //发送查看目录请求
+            string listCMD = "LIST" + CRLF;
+            cmdSocket.Send(Encoding.UTF8.GetBytes(listCMD));
+            Console.WriteLine(GetCmdMessage());
+            //获取目录内容
+            byte[] fbytes = new byte[ByteArraySize];
+            string FileInfoList = "";//储存文件信息的字符串
+            while ((dataSocket.Receive(fbytes)) != 0)//拼接所有输出
+            {
+                FileInfoList += Encoding.Default.GetString(fbytes);
+            }
+            string[] fileLineArray = Regex.Split(FileInfoList, "\n");//换行符分割每个文件信息
+            foreach (var fileInfo in fileLineArray)//再次分割获取文件名
+            {
+                string[] fileInfoSplit = Regex.Split(fileInfo, " ");
+                string fileName = fileInfoSplit[fileInfoSplit.Length - 1];
+                ftpFileList.Add(fileName);
+            }
+            return ftpFileList;
         }
     }
 }
