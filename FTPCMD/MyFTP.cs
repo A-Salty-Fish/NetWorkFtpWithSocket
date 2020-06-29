@@ -27,7 +27,7 @@ namespace FTPCMD
         private Socket cmdSocket;
         private Socket dataSocket;
 
-        #region 获取服务器相关信息
+        #region 获取\设置服务器相关信息
         /// <summary>
         /// 获取FTP服务器控制端口返回的消息
         /// </summary>
@@ -52,6 +52,20 @@ namespace FTPCMD
             }
             else
                 return 0;
+        }
+
+        /// <summary>
+        /// 尝试设置UTF8
+        /// </summary>
+        public string SetUTF8()
+        {
+            string SetUtf8Cmd = "OPTS UTF8 ON" + CRLF;
+            cmdSocket.Send(Encoding.UTF8.GetBytes(SetUtf8Cmd));
+            GetCmdMessage();
+            if (GetRCode() == 200)
+                return "Set successful";
+            else
+                return "Unable to set";
         }
 
         #endregion
