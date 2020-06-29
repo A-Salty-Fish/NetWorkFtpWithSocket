@@ -19,15 +19,19 @@ namespace FTPCMD
 
             Console.WriteLine(myFtp.LoginIn(ConfigurationManager.AppSettings["MyUserName"], ConfigurationManager.AppSettings["MyPassWord"]));
 
-            //Console.WriteLine(myFtp.DownLoadFile("hello.txt", 500));
-            //Console.WriteLine(myFtp.DownLoadFileFromBreakPoint("hello.txt",500));
-            //Console.WriteLine(myFtp.UpLoadFile("ttt.pptx", 1500));
+            //Console.WriteLine(myFtp.GetFtpFileSize("www - 副本.ppt"));
+
+            //Console.WriteLine(myFtp.DownLoadFile("hello3.txt"));
+            Console.WriteLine(myFtp.GetFtpFileSize("www-副本.ppt"));
+            Console.WriteLine(myFtp.GetLocalFileSize("www-副本.ppt"));
+            //Console.WriteLine(myFtp.DownLoadFile("hello3.txt"));
+            //Console.WriteLine(myFtp.UpLoadFile("www - 副本.ppt"));
             //Console.WriteLine(myFtp.UpLoadFileFromBreakPoint("ttt.pptx", 1500));
-            List<string> ftpFileList = myFtp.GetFtpFileList();
-            foreach (var x in ftpFileList)
-            {
-                Console.WriteLine(x);
-            }
+            //List<string> ftpFileList = myFtp.GetFtpFileList();
+            //foreach (var x in ftpFileList)
+            //{
+            //    Console.WriteLine(x);
+            //}
             //Console.WriteLine(myFtp.CloseDataSocket());
             Console.WriteLine(myFtp.Close());
 
