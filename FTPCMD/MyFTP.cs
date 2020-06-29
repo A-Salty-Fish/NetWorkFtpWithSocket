@@ -60,7 +60,14 @@ namespace FTPCMD
         {
             string ExtAttrCMD = "FEAT" + CRLF;
             cmdSocket.Send(Encoding.UTF8.GetBytes(ExtAttrCMD));
-            return GetCmdMessage();
+
+            string message = GetCmdMessage();
+            while (!message.Contains("211 END"))//没到末尾则一直读取
+            {
+                message += GetCmdMessage();
+            }
+
+            return message;
         }
         /// <summary>
         /// 尝试设置UTF8

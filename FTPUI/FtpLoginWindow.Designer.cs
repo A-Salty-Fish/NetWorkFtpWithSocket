@@ -48,7 +48,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.74757F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.25243F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 264F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 102F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 103F));
             this.tableLayoutPanel1.Controls.Add(this.LabelIP, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.LabelPassword, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.LabelUserName, 1, 2);
@@ -74,7 +74,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelIP.AutoSize = true;
             this.LabelIP.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.LabelIP.Location = new System.Drawing.Point(90, 41);
+            this.LabelIP.Location = new System.Drawing.Point(89, 41);
             this.LabelIP.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.LabelIP.Name = "LabelIP";
             this.LabelIP.Size = new System.Drawing.Size(108, 65);
@@ -89,7 +89,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelPassword.AutoSize = true;
             this.LabelPassword.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.LabelPassword.Location = new System.Drawing.Point(90, 206);
+            this.LabelPassword.Location = new System.Drawing.Point(89, 206);
             this.LabelPassword.Margin = new System.Windows.Forms.Padding(5, 15, 5, 5);
             this.LabelPassword.Name = "LabelPassword";
             this.LabelPassword.Size = new System.Drawing.Size(108, 58);
@@ -104,7 +104,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelUserName.AutoSize = true;
             this.LabelUserName.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.LabelUserName.Location = new System.Drawing.Point(90, 126);
+            this.LabelUserName.Location = new System.Drawing.Point(89, 126);
             this.LabelUserName.Margin = new System.Windows.Forms.Padding(5, 15, 5, 5);
             this.LabelUserName.Name = "LabelUserName";
             this.LabelUserName.Size = new System.Drawing.Size(108, 60);
@@ -117,7 +117,7 @@
             this.TextBoxIP.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBoxIP.Location = new System.Drawing.Point(213, 59);
+            this.TextBoxIP.Location = new System.Drawing.Point(212, 59);
             this.TextBoxIP.Margin = new System.Windows.Forms.Padding(10, 28, 10, 20);
             this.TextBoxIP.Name = "TextBoxIP";
             this.TextBoxIP.SelectControl = null;
@@ -132,7 +132,7 @@
             this.TextBoxUserName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBoxUserName.Location = new System.Drawing.Point(213, 137);
+            this.TextBoxUserName.Location = new System.Drawing.Point(212, 137);
             this.TextBoxUserName.Margin = new System.Windows.Forms.Padding(10, 26, 10, 20);
             this.TextBoxUserName.Name = "TextBoxUserName";
             this.TextBoxUserName.SelectControl = null;
@@ -148,7 +148,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBoxPassword.Font = new System.Drawing.Font("宋体", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TextBoxPassword.Location = new System.Drawing.Point(213, 217);
+            this.TextBoxPassword.Location = new System.Drawing.Point(212, 217);
             this.TextBoxPassword.Margin = new System.Windows.Forms.Padding(10, 26, 10, 20);
             this.TextBoxPassword.Name = "TextBoxPassword";
             this.TextBoxPassword.PasswordChar = '○';
@@ -165,7 +165,7 @@
             this.CheckBoxShowPwd.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.CheckBoxShowPwd.DownBack = null;
             this.CheckBoxShowPwd.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.CheckBoxShowPwd.Location = new System.Drawing.Point(481, 217);
+            this.CheckBoxShowPwd.Location = new System.Drawing.Point(480, 217);
             this.CheckBoxShowPwd.Margin = new System.Windows.Forms.Padding(14, 26, 14, 20);
             this.CheckBoxShowPwd.MouseBack = null;
             this.CheckBoxShowPwd.Name = "CheckBoxShowPwd";
@@ -173,7 +173,7 @@
             this.CheckBoxShowPwd.SelectedDownBack = null;
             this.CheckBoxShowPwd.SelectedMouseBack = null;
             this.CheckBoxShowPwd.SelectedNormlBack = null;
-            this.CheckBoxShowPwd.Size = new System.Drawing.Size(75, 32);
+            this.CheckBoxShowPwd.Size = new System.Drawing.Size(76, 32);
             this.CheckBoxShowPwd.TabIndex = 7;
             this.CheckBoxShowPwd.Text = "显示";
             this.CheckBoxShowPwd.UseVisualStyleBackColor = false;

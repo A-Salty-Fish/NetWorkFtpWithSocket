@@ -38,6 +38,7 @@
             this.ListBoxFtp = new System.Windows.Forms.ListBox();
             this.ListBoxMessage = new System.Windows.Forms.ListBox();
             this.TextBoxExtendAttr = new CCWin.SkinControl.SkinTextBox();
+            this.ButtonExtAttri = new CCWin.SkinControl.SkinButton();
             this.SuspendLayout();
             // 
             // ButtonUpload
@@ -186,11 +187,27 @@
             this.TextBoxExtendAttr.WaterText = "";
             this.TextBoxExtendAttr.WordWrap = true;
             // 
+            // ButtonExtAttri
+            // 
+            this.ButtonExtAttri.BackColor = System.Drawing.Color.Transparent;
+            this.ButtonExtAttri.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.ButtonExtAttri.DownBack = null;
+            this.ButtonExtAttri.Location = new System.Drawing.Point(369, 456);
+            this.ButtonExtAttri.MouseBack = null;
+            this.ButtonExtAttri.Name = "ButtonExtAttri";
+            this.ButtonExtAttri.NormlBack = null;
+            this.ButtonExtAttri.Size = new System.Drawing.Size(61, 57);
+            this.ButtonExtAttri.TabIndex = 12;
+            this.ButtonExtAttri.Text = "拓展信息";
+            this.ButtonExtAttri.UseVisualStyleBackColor = false;
+            this.ButtonExtAttri.Click += new System.EventHandler(this.ButtonExtAttri_Click);
+            // 
             // FtpMainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 520);
+            this.Controls.Add(this.ButtonExtAttri);
             this.Controls.Add(this.TextBoxExtendAttr);
             this.Controls.Add(this.ListBoxMessage);
             this.Controls.Add(this.ListBoxFtp);
@@ -220,6 +237,7 @@
         private System.Windows.Forms.ListBox ListBoxFtp;
         private System.Windows.Forms.ListBox ListBoxMessage;
         private CCWin.SkinControl.SkinTextBox TextBoxExtendAttr;
+        private CCWin.SkinControl.SkinButton ButtonExtAttri;
     }
 }
 

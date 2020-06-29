@@ -27,7 +27,6 @@ namespace FTPUI
             InitializeComponent();
             LoginInWindow.ShowDialog();
             if (myFtp.GetRCode() != 230) { System.Environment.Exit(0);}
-            //ShowExtendAttri();
             ListBoxMessage.Items.Add("已连接");
             FreshFtpFile();
         }
@@ -45,9 +44,9 @@ namespace FTPUI
 
         private void ShowExtendAttri()
         {
-            var message = myFtp.GetFtpExtAttr();
-            TextBoxExtendAttr.Text = message;
-
+            //string message = myFtp.GetFtpExtAttr();
+            //TextBoxExtendAttr.Text = message;
+            //ListBoxMessage.Items.Add("成功获取服务器拓展");
         }
 
         private void FreshLocalFile()
@@ -125,5 +124,9 @@ namespace FTPUI
             ListBoxMessage.Items.Add("上传完成:" + fileName);
         }
 
+        private void ButtonExtAttri_Click(object sender, EventArgs e)
+        {
+            ShowExtendAttri();
+        }
     }
 }
