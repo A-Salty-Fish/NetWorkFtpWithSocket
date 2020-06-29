@@ -65,15 +65,25 @@ namespace FTPCMD
         /// <summary>
         /// 尝试设置UTF8
         /// </summary>
-        public string SetUTF8()
+        public string SetUTF8(bool set = true)
         {
-            string SetUtf8Cmd = "OPTS UTF8 ON" + CRLF;
-            cmdSocket.Send(Encoding.UTF8.GetBytes(SetUtf8Cmd));
-            GetCmdMessage();
-            if (GetRCode() == 200)
-                return "Set UTF8 successful";
+            if (set)
+            {
+                string SetUtf8Cmd = "OPTS UTF8 ON" + CRLF;
+                cmdSocket.Send(Encoding.UTF8.GetBytes(SetUtf8Cmd));
+                GetCmdMessage();
+                if (GetRCode() == 200)
+                    return "Set UTF8 ON successful";
+                else
+                    return "Unable to set UTF8";
+            }
             else
-                return "Unable to set UTF8";
+            {
+                string SetUtf8Cmd = "OPTS UTF8 OFF" + CRLF;
+                cmdSocket.Send(Encoding.UTF8.GetBytes(SetUtf8Cmd));
+                Console.WriteLine(GetCmdMessage());
+                return "Set UTF8 OFF successful";
+            }
         }
 
         #endregion
