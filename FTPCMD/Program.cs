@@ -18,10 +18,11 @@ namespace FTPCMD
             Console.WriteLine(myFtp.Connect(ConfigurationManager.AppSettings["MyFtpIP"]));
 
             Console.WriteLine(myFtp.LoginIn(ConfigurationManager.AppSettings["MyUserName"], ConfigurationManager.AppSettings["MyPassWord"]));
-            Console.WriteLine(myFtp.SetUTF8());
+            //Console.WriteLine(myFtp.SetUTF8());
 
             //Console.WriteLine(myFtp.GetFtpFileSize("www - 副本.ppt"));
 
+            Console.WriteLine(myFtp.GetFtpExtAttr());
             //Console.WriteLine(myFtp.DownLoadFile("hello3.txt"));
             //Console.WriteLine(myFtp.GetFtpFileSize("www-副本.ppt"));
             //Console.WriteLine(myFtp.GetLocalFileSize("www-副本.ppt"));

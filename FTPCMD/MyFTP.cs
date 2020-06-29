@@ -53,7 +53,15 @@ namespace FTPCMD
             else
                 return 0;
         }
-
+        /// <summary>
+        /// 获取服务器扩展项
+        /// </summary
+        public string GetFtpExtAttr()
+        {
+            string ExtAttrCMD = "FEAT" + CRLF;
+            cmdSocket.Send(Encoding.UTF8.GetBytes(ExtAttrCMD));
+            return GetCmdMessage();
+        }
         /// <summary>
         /// 尝试设置UTF8
         /// </summary>
