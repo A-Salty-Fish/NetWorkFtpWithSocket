@@ -18,7 +18,8 @@ namespace FTPUI
 
         public static MyFTP myFtp;
         private readonly Form LoginInWindow = new FtpLoginWindow();
-
+        private List<string> ftpFileList;
+        private List<string> localFileList;
         public string LocalPath;
 
         public FtpMainWindow()
@@ -44,20 +45,28 @@ namespace FTPUI
 
         private void ShowExtendAttri()
         {
-            //string message = myFtp.GetFtpExtAttr();
-            //TextBoxExtendAttr.Text = message;
-            //ListBoxMessage.Items.Add("成功获取服务器拓展");
+            string message = myFtp.GetFtpExtAttr();
+            TextBoxExtendAttr.Text = message;
+            ListBoxMessage.Items.Add("成功获取服务器拓展");
         }
 
         private void FreshLocalFile()
         {
             if (LocalPath == null) return;
             ListBoxLocal.Items.Clear();
-            List<string> localFileList = myFtp.GetLocalFileList(LocalPath);
-            foreach (var fileName in localFileList)
-            {
-                ListBoxLocal.Items.Add(fileName);
-            }
+            localFileList = myFtp.GetLocalFileList(LocalPath);
+            if (CheckBoxShowFileSize.Checked)
+                foreach (var fileName in localFileList)
+                {
+                    string filePath = LocalPath + "\\" + fileName;
+                    ListBoxLocal.Items.Add(fileName + " 大小: " + myFtp.GetLocalFileSize(filePath) + "B");
+                }
+            else
+                foreach (var fileName in localFileList)
+                {
+                    ListBoxLocal.Items.Add(fileName);
+                }
+
             ListBoxMessage.Items.Add("成功刷新本地文件列表");
         }
 
@@ -65,7 +74,7 @@ namespace FTPUI
         {
             ListBoxMessage.Items.Add(myFtp.SetUTF8(false));
             ListBoxFtp.Items.Clear();
-            List<string> ftpFileList = myFtp.GetFtpFileList();
+            ftpFileList = myFtp.GetFtpFileList();
             foreach (var fileName in ftpFileList)
             {
                 ListBoxFtp.Items.Add(fileName);
@@ -128,5 +137,35 @@ namespace FTPUI
         {
             ShowExtendAttri();
         }
+
+        private void CheckBoxShowFileSize_CheckedChanged(object sender, EventArgs e)
+        {
+            FreshFtpFile();
+            FreshLocalFile();
+            ListBoxMessage.Items.Add(myFtp.SetUTF8(true));
+
+            if (CheckBoxShowFileSize.Checked)
+            {
+                ListBoxMessage.Items.Add("显示文件大小");
+                ListBoxFtp.Items.Clear();
+                foreach (var fileName in ftpFileList)
+                {
+                    ListBoxFtp.Items.Add(fileName + "  大小: " + myFtp.GetFtpFileSize(fileName) + "B");
+                }
+                ListBoxLocal.Items.Clear();
+                if (localFileList!=null)
+                    foreach (var fileName in localFileList)
+                    {
+                        string filePath = LocalPath + "\\" + fileName;
+                        ListBoxLocal.Items.Add(fileName + " 大小: " + myFtp.GetLocalFileSize(filePath) + "B");
+                    }
+            }
+            else
+            {
+                ListBoxMessage.Items.Add("取消显示文件大小");
+                return;
+            }
+        }
+
     }
 }

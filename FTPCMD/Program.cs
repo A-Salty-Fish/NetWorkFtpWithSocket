@@ -35,6 +35,8 @@ namespace FTPCMD
             //    Console.WriteLine(x);
             //}
             //Console.WriteLine(myFtp.CloseDataSocket());
+            //Console.WriteLine(myFtp.SetUTF8(true));
+            //Console.WriteLine(myFtp.GetFtpFileSize("2020课程设计团队实验报告.docx"));
             myFtp.Close();
             //Console.WriteLine(myFtp.Close());
             //List<string> localFileList = myFtp.GetLocalFileList(@"E:\C sharp\NetWorkFtpWithSocket\FTPCMD");

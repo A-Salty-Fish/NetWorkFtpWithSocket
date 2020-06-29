@@ -39,6 +39,7 @@
             this.ListBoxMessage = new System.Windows.Forms.ListBox();
             this.TextBoxExtendAttr = new CCWin.SkinControl.SkinTextBox();
             this.ButtonExtAttri = new CCWin.SkinControl.SkinButton();
+            this.CheckBoxShowFileSize = new CCWin.SkinControl.SkinCheckBox();
             this.SuspendLayout();
             // 
             // ButtonUpload
@@ -91,7 +92,7 @@
             this.ButtonDownLoad.BackColor = System.Drawing.Color.Transparent;
             this.ButtonDownLoad.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.ButtonDownLoad.DownBack = null;
-            this.ButtonDownLoad.Location = new System.Drawing.Point(490, 308);
+            this.ButtonDownLoad.Location = new System.Drawing.Point(430, 308);
             this.ButtonDownLoad.MouseBack = null;
             this.ButtonDownLoad.Name = "ButtonDownLoad";
             this.ButtonDownLoad.NormlBack = null;
@@ -106,7 +107,7 @@
             this.ButtonFreshFtp.BackColor = System.Drawing.Color.Transparent;
             this.ButtonFreshFtp.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.ButtonFreshFtp.DownBack = null;
-            this.ButtonFreshFtp.Location = new System.Drawing.Point(675, 308);
+            this.ButtonFreshFtp.Location = new System.Drawing.Point(712, 308);
             this.ButtonFreshFtp.MouseBack = null;
             this.ButtonFreshFtp.Name = "ButtonFreshFtp";
             this.ButtonFreshFtp.NormlBack = null;
@@ -119,18 +120,22 @@
             // ListBoxLocal
             // 
             this.ListBoxLocal.FormattingEnabled = true;
+            this.ListBoxLocal.HorizontalScrollbar = true;
             this.ListBoxLocal.ItemHeight = 18;
             this.ListBoxLocal.Location = new System.Drawing.Point(7, 37);
             this.ListBoxLocal.Name = "ListBoxLocal";
+            this.ListBoxLocal.ScrollAlwaysVisible = true;
             this.ListBoxLocal.Size = new System.Drawing.Size(363, 256);
             this.ListBoxLocal.TabIndex = 8;
             // 
             // ListBoxFtp
             // 
             this.ListBoxFtp.FormattingEnabled = true;
+            this.ListBoxFtp.HorizontalScrollbar = true;
             this.ListBoxFtp.ItemHeight = 18;
             this.ListBoxFtp.Location = new System.Drawing.Point(430, 37);
             this.ListBoxFtp.Name = "ListBoxFtp";
+            this.ListBoxFtp.ScrollAlwaysVisible = true;
             this.ListBoxFtp.Size = new System.Drawing.Size(363, 256);
             this.ListBoxFtp.TabIndex = 9;
             // 
@@ -202,11 +207,32 @@
             this.ButtonExtAttri.UseVisualStyleBackColor = false;
             this.ButtonExtAttri.Click += new System.EventHandler(this.ButtonExtAttri_Click);
             // 
+            // CheckBoxShowFileSize
+            // 
+            this.CheckBoxShowFileSize.AutoSize = true;
+            this.CheckBoxShowFileSize.BackColor = System.Drawing.Color.Transparent;
+            this.CheckBoxShowFileSize.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.CheckBoxShowFileSize.DownBack = null;
+            this.CheckBoxShowFileSize.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.CheckBoxShowFileSize.Location = new System.Drawing.Point(559, 310);
+            this.CheckBoxShowFileSize.MouseBack = null;
+            this.CheckBoxShowFileSize.Name = "CheckBoxShowFileSize";
+            this.CheckBoxShowFileSize.NormlBack = null;
+            this.CheckBoxShowFileSize.SelectedDownBack = null;
+            this.CheckBoxShowFileSize.SelectedMouseBack = null;
+            this.CheckBoxShowFileSize.SelectedNormlBack = null;
+            this.CheckBoxShowFileSize.Size = new System.Drawing.Size(108, 28);
+            this.CheckBoxShowFileSize.TabIndex = 13;
+            this.CheckBoxShowFileSize.Text = "显示大小";
+            this.CheckBoxShowFileSize.UseVisualStyleBackColor = false;
+            this.CheckBoxShowFileSize.CheckedChanged += new System.EventHandler(this.CheckBoxShowFileSize_CheckedChanged);
+            // 
             // FtpMainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 520);
+            this.Controls.Add(this.CheckBoxShowFileSize);
             this.Controls.Add(this.ButtonExtAttri);
             this.Controls.Add(this.TextBoxExtendAttr);
             this.Controls.Add(this.ListBoxMessage);
@@ -223,6 +249,7 @@
             this.Text = "Ftp客户端";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FtpMainWindow_FormClosed);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -238,6 +265,7 @@
         private System.Windows.Forms.ListBox ListBoxMessage;
         private CCWin.SkinControl.SkinTextBox TextBoxExtendAttr;
         private CCWin.SkinControl.SkinButton ButtonExtAttri;
+        private CCWin.SkinControl.SkinCheckBox CheckBoxShowFileSize;
     }
 }
 

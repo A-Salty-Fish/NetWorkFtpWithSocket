@@ -54,7 +54,7 @@ namespace FTPCMD
                 return 0;
         }
         /// <summary>
-        /// 获取服务器扩展项
+        /// 获取服务器扩展信息
         /// </summary
         public string GetFtpExtAttr()
         {
@@ -67,6 +67,8 @@ namespace FTPCMD
                 message += GetCmdMessage();
             }
 
+            message = message.Substring("211-Extended features supported:\r\n".Length);
+            message = message.Substring(0, message.Length - "211 END\r\n".Length);
             return message;
         }
         /// <summary>
@@ -405,7 +407,7 @@ namespace FTPCMD
                 Regex regex = new Regex("\\s+");
                 string[] fileInfoSplit = regex.Split(fileInfo, 4);
                 string fileName = fileInfoSplit[fileInfoSplit.Length - 1];
-                ftpFileList.Add(fileName);
+                ftpFileList.Add(fileName.Substring(0,fileName.Length-1));
             }
             ftpFileList.RemoveAt(ftpFileList.Count-1);
             CloseDataSocket();
@@ -430,7 +432,7 @@ namespace FTPCMD
             cmdSocket.Send(Encoding.UTF8.GetBytes(SizeCMD));
             string message = GetCmdMessage();
             int RCode = GetRCode();
-            if (RCode == 550)
+            if (RCode == 550 || RCode == 451)
             {
                 GetCmdMessage();//吞入服务器报错信息
                 return -1;
