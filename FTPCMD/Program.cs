@@ -29,11 +29,11 @@ namespace FTPCMD
             //Console.WriteLine(myFtp.DownLoadFile("www - 副本.ppt"));
             //Console.WriteLine(myFtp.UpLoadFile("www - 副本.ppt"));
             //Console.WriteLine(myFtp.UpLoadFileFromBreakPoint("ttt.pptx", 1500));
-            List<string> ftpFileList = myFtp.GetFtpFileList();
-            foreach (var x in ftpFileList)
-            {
-                Console.WriteLine(x);
-            }
+            //List<string> ftpFileList = myFtp.GetFtpFileList();
+            //foreach (var x in ftpFileList)
+            //{
+            //    Console.WriteLine(x);
+            //}
             //Console.WriteLine(myFtp.CloseDataSocket());
             Console.WriteLine(myFtp.Close());
 

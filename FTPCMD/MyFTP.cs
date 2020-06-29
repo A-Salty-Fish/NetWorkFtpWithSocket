@@ -71,9 +71,9 @@ namespace FTPCMD
             cmdSocket.Send(Encoding.UTF8.GetBytes(SetUtf8Cmd));
             GetCmdMessage();
             if (GetRCode() == 200)
-                return "Set successful";
+                return "Set UTF8 successful";
             else
-                return "Unable to set";
+                return "Unable to set UTF8";
         }
 
         #endregion
