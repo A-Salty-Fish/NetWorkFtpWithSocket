@@ -379,12 +379,13 @@ namespace FTPCMD
             string[] fileLineArray = Regex.Split(FileInfoList, "\n");//换行符分割每个文件信息
             foreach (var fileInfo in fileLineArray)//再次分割获取文件名
             {
-                string[] fileInfoSplit = Regex.Split(fileInfo, "\\s+");
-                string fileName = "";
-                for (int i = 3; i < fileInfoSplit.Length; i++)
-                    fileName += fileInfoSplit[i] + " ";
+                Regex regex = new Regex("\\s+");
+                string[] fileInfoSplit = regex.Split(fileInfo, 4);
+                string fileName = fileInfoSplit[fileInfoSplit.Length - 1];
                 ftpFileList.Add(fileName);
             }
+            ftpFileList.RemoveAt(ftpFileList.Count-1);
+            CloseDataSocket();
             return ftpFileList;
         }
         /// <summary>
