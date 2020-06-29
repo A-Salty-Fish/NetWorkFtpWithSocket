@@ -26,6 +26,7 @@ namespace FTPUI
             myFtp = new MyFTP();
             InitializeComponent();
             LoginInWindow.ShowDialog();
+            if (myFtp.GetRCode() != 230) { System.Environment.Exit(0);}
             //ShowExtendAttri();
             ListBoxMessage.Items.Add("已连接");
             FreshFtpFile();
@@ -90,12 +91,28 @@ namespace FTPUI
 
         private void ButtonDownLoad_Click(object sender, EventArgs e)
         {
-            
+            if (LocalPath == null)
+            {
+                MessageBox.Show("请选择路径");
+                return;
+            }
+            else if (ListBoxFtp.SelectedIndex < 0)
+            {
+                MessageBox.Show("请选择文件");
+                return;
+            }
+            ListBoxMessage.Items.Add(myFtp.SetUTF8(true));
+            string fileName = ListBoxFtp.Items[ListBoxFtp.SelectedIndex].ToString();
+            fileName = fileName.Substring(0, fileName.Length - 1);
+            string filePath = LocalPath + "\\" + fileName;
+            ListBoxMessage.Items.Add("准备下载:" + fileName);
+            myFtp.DownLoadFile(fileName, filePath);
+            ListBoxMessage.Items.Add("下载完成:" + fileName);
         }
 
         private void ButtonUpload_Click(object sender, EventArgs e)
         {
-            if (LocalPath == "" || ListBoxLocal.SelectedIndex < 0)
+            if (LocalPath == null || ListBoxLocal.SelectedIndex < 0)
             {
                 MessageBox.Show("请选择上传的文件");
                 return;

@@ -58,5 +58,10 @@ namespace FTPUI
                 }
             }
         }
+
+        private void FtpLoginWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
     }
 }

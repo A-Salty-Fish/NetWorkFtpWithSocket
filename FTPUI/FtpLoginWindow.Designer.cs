@@ -208,6 +208,7 @@
             this.MinimizeBox = false;
             this.Name = "FtpLoginWindow";
             this.Text = "登录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FtpLoginWindow_FormClosing);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
