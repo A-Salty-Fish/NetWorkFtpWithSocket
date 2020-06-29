@@ -7,14 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CCWin;
+using FTPCMD;
 
 namespace FTPUI
 {
-    public partial class Form1 : Form
+    public partial class FtpMainWindow : Skin_DevExpress
     {
-        public Form1()
+        public static MyFTP myFtp;
+        private readonly Form LoginInWindow = new FtpLoginWindow();
+        public FtpMainWindow()
         {
+            myFtp = new MyFTP();
             InitializeComponent();
+            LoginInWindow.ShowDialog();
         }
     }
 }

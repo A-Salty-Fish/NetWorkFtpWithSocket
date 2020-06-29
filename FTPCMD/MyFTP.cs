@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FTPCMD
 {
-    class MyFTP
+    public class MyFTP
     {
         //连接相关常量
         private string CRLF = "\r\n";
