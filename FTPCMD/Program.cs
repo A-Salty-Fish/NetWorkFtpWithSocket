@@ -22,10 +22,10 @@ namespace FTPCMD
             //Console.WriteLine(myFtp.GetFtpFileSize("www - 副本.ppt"));
 
             //Console.WriteLine(myFtp.DownLoadFile("hello3.txt"));
-            Console.WriteLine(myFtp.GetFtpFileSize("www-副本.ppt"));
-            Console.WriteLine(myFtp.GetLocalFileSize("www-副本.ppt"));
-            //Console.WriteLine(myFtp.DownLoadFile("hello3.txt"));
-            //Console.WriteLine(myFtp.UpLoadFile("www - 副本.ppt"));
+            //Console.WriteLine(myFtp.GetFtpFileSize("www-副本.ppt"));
+            //Console.WriteLine(myFtp.GetLocalFileSize("www-副本.ppt"));
+            //Console.WriteLine(myFtp.DownLoadFile("www-副本.ppt"));
+            Console.WriteLine(myFtp.UpLoadFile("www - 副本.ppt"));
             //Console.WriteLine(myFtp.UpLoadFileFromBreakPoint("ttt.pptx", 1500));
             //List<string> ftpFileList = myFtp.GetFtpFileList();
             //foreach (var x in ftpFileList)
