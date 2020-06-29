@@ -26,7 +26,7 @@ namespace FTPUI
             myFtp = new MyFTP();
             InitializeComponent();
             LoginInWindow.ShowDialog();
-            ShowExtendAttri();
+            //ShowExtendAttri();
             FreshFtpFile();
             ListBoxMessage.Items.Add("已连接");
             ListBoxMessage.Items.Add(myFtp.SetUTF8());
@@ -39,6 +39,7 @@ namespace FTPUI
             {
                 LocalPath = fbd.SelectedPath;
                 FreshLocalFile();
+                ListBoxMessage.Items.Add("选择目录：" + LocalPath);
             }
         }
 
@@ -92,7 +93,16 @@ namespace FTPUI
 
         private void ButtonUpload_Click(object sender, EventArgs e)
         {
-
+            if (LocalPath == "" || ListBoxLocal.SelectedIndex < 0)
+            {
+                MessageBox.Show("请选择上传的文件");
+                return;
+            }
+            string fileName = ListBoxLocal.Items[ListBoxLocal.SelectedIndex].ToString();
+            string filePath = LocalPath + "\\" + fileName;
+            ListBoxMessage.Items.Add("准备上传:" + fileName);
+            myFtp.UpLoadFile(fileName,filePath);
+            ListBoxMessage.Items.Add("上传完成:" + fileName);
         }
 
     }

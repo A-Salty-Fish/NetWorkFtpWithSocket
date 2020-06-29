@@ -119,10 +119,12 @@ namespace FTPCMD
             //处理返回的数据端口
             string retstr;
             string[] retArray = Regex.Split(message, ",");
-            if (retArray[5][2] != ')')
+            if (retArray[5][3] == ')')
                 retstr = retArray[5].Substring(0, 3);
-            else
+            else if (retArray[5][2] == ')')
                 retstr = retArray[5].Substring(0, 2);
+            else
+                retstr = retArray[5].Substring(0, 1);
             DataPort = Convert.ToInt32(retArray[4]) * 256 + Convert.ToInt32(retstr);
             //将数据套接字绑定数据端口
             dataSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -134,11 +136,12 @@ namespace FTPCMD
 
         #region 正常的上传下载/加入断点续传
         /// <summary>
-        /// 从FTP服务器下载文件
+        /// 从FTP服务器下载文件 name为文件名，path为完整路径名，默认为本地
         /// </summary>
-        public string DownLoadFile(string fileName, int breakPoint = 0)//便于测试，加入断点，到断点则停止下载
+        public string DownLoadFile(string fileName, string filePath = null, int breakPoint = 0)//便于测试，加入断点，到断点则停止下载
         {
-            if (!File.Exists(fileName))//本地不存在该文件则不需要断点续传
+            if (filePath == null) filePath = fileName;
+            if (!File.Exists(filePath))//本地不存在该文件则不需要断点续传
             {
                 //进入被动模式
                 PassiveMode();
@@ -147,7 +150,7 @@ namespace FTPCMD
                 cmdSocket.Send(Encoding.UTF8.GetBytes(downCmd));
                 GetCmdMessage();
                 //创建文件
-                using (FileStream fstrm = new FileStream(fileName, FileMode.Create))
+                using (FileStream fstrm = new FileStream(filePath, FileMode.Create))
                 {
                     byte[] fbytes = new byte[ByteArraySize];
 
@@ -175,11 +178,11 @@ namespace FTPCMD
             }
             else//本地存在该文件则查看是否需要断点续传
             {
-                long LocalFileSize = GetLocalFileSize(fileName);
+                long LocalFileSize = GetLocalFileSize(filePath);
                 long FtpFileSize = GetFtpFileSize(fileName);
                 if (LocalFileSize < FtpFileSize)
                 {
-                    DownLoadFileFromBreakPoint(fileName, (int) LocalFileSize);
+                    DownLoadFileFromBreakPoint(fileName, filePath ,(int) LocalFileSize);
                     return CloseDataSocket();
                 }
                 else
@@ -187,10 +190,11 @@ namespace FTPCMD
             }
         }
         /// <summary>
-        /// 向FTP服务器上传文件
+        /// 向FTP服务器上传文件 name为文件名，path为完整路径名，默认为本地
         /// </summary>
-        public string UpLoadFile(string fileName, int breakPoint = 0)//便于测试，加入断点，到断点则停止上传
+        public string UpLoadFile(string fileName,string filePath = null, int breakPoint = 0)//便于测试，加入断点，到断点则停止上传
         {
+            if (filePath == null) filePath = fileName;
             long FtpFileSize;
             if ((FtpFileSize = GetFtpFileSize(fileName)) == -1)
             {
@@ -201,7 +205,7 @@ namespace FTPCMD
                 cmdSocket.Send(Encoding.UTF8.GetBytes(uplodeCMD));
                 GetCmdMessage();
                 //打开文件读取数据
-                using (FileStream fstrm = new FileStream(fileName, FileMode.Open))
+                using (FileStream fstrm = new FileStream(filePath, FileMode.Open))
                 {
                     byte[] fbytes = new byte[BufferSize];
                     int sum = 0;//计算总共读取了多少文件字节
@@ -237,9 +241,9 @@ namespace FTPCMD
             }
             else//若ftp服务器存在该文件，则检查是否需要断点续传
             {
-                if (FtpFileSize < GetLocalFileSize(fileName))
+                if (FtpFileSize < GetLocalFileSize(filePath))
                 {
-                    UpLoadFileFromBreakPoint(fileName, (int)FtpFileSize);
+                    UpLoadFileFromBreakPoint(fileName, filePath, (int)FtpFileSize);
                     return CloseDataSocket();
                 }
                 else
@@ -254,8 +258,9 @@ namespace FTPCMD
         /// <summary>
         /// 断点续传：上传
         /// </summary>
-        public string UpLoadFileFromBreakPoint(string fileName, int breakPoint)
+        public string UpLoadFileFromBreakPoint(string fileName, string filePath, int breakPoint)
         {
+            if (filePath == null) filePath = fileName;
             //进入被动模式
             PassiveMode();
             //申请断点续传
@@ -267,7 +272,7 @@ namespace FTPCMD
             cmdSocket.Send(Encoding.UTF8.GetBytes(uplodeCMD));
             GetCmdMessage();
             //从断点打开文件读取数据
-            using (FileStream fstrm = new FileStream(fileName, FileMode.Open))
+            using (FileStream fstrm = new FileStream(filePath, FileMode.Open))
             {
                 fstrm.Seek(breakPoint, SeekOrigin.Begin);//寻找偏移
 
@@ -292,8 +297,9 @@ namespace FTPCMD
         /// <summary>
         /// 断点续传:下载
         /// </summary>
-        public string DownLoadFileFromBreakPoint(string fileName, int breakPoint)
+        public string DownLoadFileFromBreakPoint(string fileName,string filePath, int breakPoint)
         {
+            if (filePath == null) filePath = fileName;
             //进入被动模式
             PassiveMode();
             //申请断点续传
@@ -305,7 +311,7 @@ namespace FTPCMD
             cmdSocket.Send(Encoding.UTF8.GetBytes(downCmd));
             GetCmdMessage();
             //写入文件
-            using (FileStream fstrm = new FileStream(fileName, FileMode.Open))
+            using (FileStream fstrm = new FileStream(filePath, FileMode.Open))
             {
                 byte[] fbytes = new byte[ByteArraySize];
                 fstrm.Seek(breakPoint, SeekOrigin.Begin);
