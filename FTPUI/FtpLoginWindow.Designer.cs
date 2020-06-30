@@ -48,7 +48,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.74757F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.25243F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 264F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 103F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 104F));
             this.tableLayoutPanel1.Controls.Add(this.LabelIP, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.LabelPassword, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.LabelUserName, 1, 2);
@@ -56,7 +56,7 @@
             this.tableLayoutPanel1.Controls.Add(this.TextBoxUserName, 2, 2);
             this.tableLayoutPanel1.Controls.Add(this.TextBoxPassword, 2, 3);
             this.tableLayoutPanel1.Controls.Add(this.CheckBoxShowPwd, 3, 3);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 34);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 38);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
@@ -77,7 +77,7 @@
             this.LabelIP.Location = new System.Drawing.Point(89, 41);
             this.LabelIP.Margin = new System.Windows.Forms.Padding(5, 10, 5, 5);
             this.LabelIP.Name = "LabelIP";
-            this.LabelIP.Size = new System.Drawing.Size(108, 65);
+            this.LabelIP.Size = new System.Drawing.Size(107, 65);
             this.LabelIP.TabIndex = 0;
             this.LabelIP.Text = "IP地址";
             this.LabelIP.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -92,7 +92,7 @@
             this.LabelPassword.Location = new System.Drawing.Point(89, 206);
             this.LabelPassword.Margin = new System.Windows.Forms.Padding(5, 15, 5, 5);
             this.LabelPassword.Name = "LabelPassword";
-            this.LabelPassword.Size = new System.Drawing.Size(108, 58);
+            this.LabelPassword.Size = new System.Drawing.Size(107, 58);
             this.LabelPassword.TabIndex = 2;
             this.LabelPassword.Text = "密码";
             this.LabelPassword.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -107,7 +107,7 @@
             this.LabelUserName.Location = new System.Drawing.Point(89, 126);
             this.LabelUserName.Margin = new System.Windows.Forms.Padding(5, 15, 5, 5);
             this.LabelUserName.Name = "LabelUserName";
-            this.LabelUserName.Size = new System.Drawing.Size(108, 60);
+            this.LabelUserName.Size = new System.Drawing.Size(107, 60);
             this.LabelUserName.TabIndex = 3;
             this.LabelUserName.Text = "用户名";
             this.LabelUserName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -117,7 +117,7 @@
             this.TextBoxIP.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBoxIP.Location = new System.Drawing.Point(212, 59);
+            this.TextBoxIP.Location = new System.Drawing.Point(211, 59);
             this.TextBoxIP.Margin = new System.Windows.Forms.Padding(10, 28, 10, 20);
             this.TextBoxIP.Name = "TextBoxIP";
             this.TextBoxIP.SelectControl = null;
@@ -132,7 +132,7 @@
             this.TextBoxUserName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBoxUserName.Location = new System.Drawing.Point(212, 137);
+            this.TextBoxUserName.Location = new System.Drawing.Point(211, 137);
             this.TextBoxUserName.Margin = new System.Windows.Forms.Padding(10, 26, 10, 20);
             this.TextBoxUserName.Name = "TextBoxUserName";
             this.TextBoxUserName.SelectControl = null;
@@ -148,7 +148,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBoxPassword.Font = new System.Drawing.Font("宋体", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.TextBoxPassword.Location = new System.Drawing.Point(212, 217);
+            this.TextBoxPassword.Location = new System.Drawing.Point(211, 217);
             this.TextBoxPassword.Margin = new System.Windows.Forms.Padding(10, 26, 10, 20);
             this.TextBoxPassword.Name = "TextBoxPassword";
             this.TextBoxPassword.PasswordChar = '○';
@@ -165,7 +165,7 @@
             this.CheckBoxShowPwd.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.CheckBoxShowPwd.DownBack = null;
             this.CheckBoxShowPwd.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.CheckBoxShowPwd.Location = new System.Drawing.Point(480, 217);
+            this.CheckBoxShowPwd.Location = new System.Drawing.Point(479, 217);
             this.CheckBoxShowPwd.Margin = new System.Windows.Forms.Padding(14, 26, 14, 20);
             this.CheckBoxShowPwd.MouseBack = null;
             this.CheckBoxShowPwd.Name = "CheckBoxShowPwd";
@@ -173,7 +173,7 @@
             this.CheckBoxShowPwd.SelectedDownBack = null;
             this.CheckBoxShowPwd.SelectedMouseBack = null;
             this.CheckBoxShowPwd.SelectedNormlBack = null;
-            this.CheckBoxShowPwd.Size = new System.Drawing.Size(76, 32);
+            this.CheckBoxShowPwd.Size = new System.Drawing.Size(77, 32);
             this.CheckBoxShowPwd.TabIndex = 7;
             this.CheckBoxShowPwd.Text = "显示";
             this.CheckBoxShowPwd.UseVisualStyleBackColor = false;
@@ -200,7 +200,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CaptionFont = new System.Drawing.Font("Microsoft YaHei UI", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ClientSize = new System.Drawing.Size(578, 394);
-            this.ControlBox = false;
             this.Controls.Add(this.ButtonLogin);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

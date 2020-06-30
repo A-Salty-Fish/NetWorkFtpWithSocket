@@ -138,11 +138,11 @@ namespace FTPCMD
             //处理返回的数据端口
             string retstr;
             string[] retArray = Regex.Split(message, ",");
-            if (retArray[5][3] == ')')
+            if (retArray[5][3] == ')')//三位数
                 retstr = retArray[5].Substring(0, 3);
-            else if (retArray[5][2] == ')')
+            else if (retArray[5][2] == ')')//两位数
                 retstr = retArray[5].Substring(0, 2);
-            else
+            else//一位数
                 retstr = retArray[5].Substring(0, 1);
             DataPort = Convert.ToInt32(retArray[4]) * 256 + Convert.ToInt32(retstr);
             //将数据套接字绑定数据端口
@@ -215,7 +215,7 @@ namespace FTPCMD
         {
             if (filePath == null) filePath = fileName;
             long FtpFileSize;
-            if ((FtpFileSize = GetFtpFileSize(fileName)) == -1)
+            if ((FtpFileSize = GetFtpFileSize(fileName)) == -1)//云端不存在该文件
             {
                 //进入被动模式
                 PassiveMode();
