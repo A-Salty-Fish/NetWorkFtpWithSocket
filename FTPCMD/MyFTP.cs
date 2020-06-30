@@ -12,68 +12,84 @@ namespace FTPCMD
 {
     public class MyFTP
     {
-        //连接相关常量
+        #region 连接相关常量
+        /// <summary>每个命令的结束符号</summary>
         private string CRLF = "\r\n";
+        /// <summary>命令端口，默认为21</summary>
         private int CmdPort = 21;
+        /// <summary>套接字缓冲区大小 默认1024B</summary>
         private int BufferSize = 1024;
+        /// <summary>比特数组大小 默认1030B</summary>
         private int ByteArraySize = 1030;
-        //连接相关参数
+        #endregion
+
+        #region 连接相关参数
+        /// <summary>Ftp服务器IP地址</summary>
         private string FtpIP;
+        /// <summary>数据端口</summary>
         private int DataPort;
+        /// <summary>用户名</summary>
         public string UserName;
+        /// <summary>密码</summary>
         public string PassWord;
+        /// <summary>客户端命令端口返回的最后一条消息</summary>
         public string LastMessage;
-        //命令套接字与数据套接字
+        #endregion
+
+        #region 套接字
+        /// <summary>命令套接字</summary>
         private Socket cmdSocket;
+        /// <summary>
+        /// 数据套接字
+        /// </summary>
         private Socket dataSocket;
+        #endregion
 
         #region 获取\设置服务器相关信息
-        /// <summary>
-        /// 获取FTP服务器控制端口返回的消息
-        /// </summary>
+        /// <summary>获取FTP服务器控制端口返回的消息</summary>
+        /// <returns>消息内容</returns>
         private string GetCmdMessage()
         {
-            byte[] data = new byte[BufferSize];//这里传递一个byte数组，实际上这个data数组用来接收数据
+            byte[] data = new byte[BufferSize];//新建一个byte数组，用来接收数据
             int length = cmdSocket.Receive(data); //length返回值表示接收了多少字节的数据
-            LastMessage = Encoding.UTF8.GetString(data, 0, length); //把接收到的数据做一个转化
+            LastMessage = Encoding.UTF8.GetString(data, 0, length); //解码数据
             
             return LastMessage;
         }
-        /// <summary>
-        /// 返回服务器最后返回的响应码
-        /// </summary>
+        /// <summary>返回服务器最后返回的响应码</summary>
+        /// <returns>整型响应码</returns> 
         public int GetRCode()
         {
             if (LastMessage != null)
             {
-                string strCode = LastMessage.Substring(0, 3);
+                string strCode = LastMessage.Substring(0, 3);//获取最近一条消息的前三位字符串
                 int RCode = Int32.Parse(strCode);
                 return RCode;
             }
             else
                 return 0;
         }
-        /// <summary>
-        /// 获取服务器扩展信息
-        /// </summary
+        /// <summary>获取服务器扩展信息</summary
+        /// <returns>扩展信息删去头尾后的字符串</returns>
         public string GetFtpExtAttr()
         {
+            //发送获取扩展信息的命令
             string ExtAttrCMD = "FEAT" + CRLF;
             cmdSocket.Send(Encoding.UTF8.GetBytes(ExtAttrCMD));
-
+            //获取服务器返回的字符串
             string message = GetCmdMessage();
             while (!message.Contains("211 END"))//没到末尾则一直读取
             {
                 message += GetCmdMessage();
             }
-
+            //删去头尾无用内容
             message = message.Substring("211-Extended features supported:\r\n".Length);
             message = message.Substring(0, message.Length - "211 END\r\n".Length);
             return message;
         }
-        /// <summary>
-        /// 尝试设置UTF8
-        /// </summary>
+        /// <summary>设置UTF8</summary>
+        /// <param name="set">true为打开，false为关闭，默认true</param>
+        /// <returns>返回设置是否成功的字符串</returns>
         public string SetUTF8(bool set = true)
         {
             if (set)
@@ -98,20 +114,21 @@ namespace FTPCMD
         #endregion
 
         #region 连接预备
-        /// <summary>
-        /// 连接上IP对应的FTP服务器
-        /// </summary>
+        /// <summary>连接上IP对应的FTP服务器</summary>
+        /// <param name="IP">ftp服务器IP地址</param>
+        /// <returns>返回服务器hello信息</returns>
         public string Connect(string IP)
         {
             FtpIP = IP;
-            cmdSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            cmdSocket.Connect(IP, CmdPort);
+            cmdSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp); //创建命令套接字
+            cmdSocket.Connect(IP, CmdPort);//尝试连接服务器
             return GetCmdMessage();
         }
 
-        /// <summary>
-        /// 使用用户名和密码登录FTP服务器
-        /// </summary>
+        /// <summary>使用用户名和密码登录FTP服务器</summary>
+        /// <param name="username">用户名</param>
+        /// <param name="password">密码</param>
+        /// <returns>是否登录成功的字符串</returns>
         public string LoginIn(string username, string password)
         {
             //先传送用户名
@@ -126,9 +143,8 @@ namespace FTPCMD
 
             return GetCmdMessage();//返回是否登录成功的字符串
         }
-        /// <summary>
-        /// 使FTP服务器进入被动模式 返回数据端口号
-        /// </summary>
+        /// <summary>使FTP服务器进入被动模式</summary>
+        /// <returns>数据端口号字符串</returns>
         public string PassiveMode()
         {
             //发送被动模式命令
@@ -138,6 +154,7 @@ namespace FTPCMD
             //处理返回的数据端口
             string retstr;
             string[] retArray = Regex.Split(message, ",");
+            //根据端口位数筛选
             if (retArray[5][3] == ')')//三位数
                 retstr = retArray[5].Substring(0, 3);
             else if (retArray[5][2] == ')')//两位数
@@ -154,9 +171,11 @@ namespace FTPCMD
         #endregion
 
         #region 正常的上传下载/加入断点续传
-        /// <summary>
-        /// 从FTP服务器下载文件 name为文件名，path为完整路径名，默认为本地
-        /// </summary>
+        /// <summary>从FTP服务器下载文件</summary>
+        /// <param name="filePath">文件名</param>
+        /// <param name="filePath">完整文件路径，包括文件名；当null时默认本地，默认为null</param>
+        /// <param name="breakPoint">控制下载的大小</param>
+        /// <returns>返回一些下载信息:完成、中断</returns>
         public string DownLoadFile(string fileName, string filePath = null, int breakPoint = 0)//便于测试，加入断点，到断点则停止下载
         {
             if (filePath == null) filePath = fileName;
@@ -197,9 +216,9 @@ namespace FTPCMD
             }
             else//本地存在该文件则查看是否需要断点续传
             {
-                long LocalFileSize = GetLocalFileSize(filePath);
-                long FtpFileSize = GetFtpFileSize(fileName);
-                if (LocalFileSize < FtpFileSize)
+                long LocalFileSize = GetLocalFileSize(filePath);//获取本地文件大小
+                long FtpFileSize = GetFtpFileSize(fileName);//获取服务器文件大小
+                if (LocalFileSize < FtpFileSize)//若服务器文件比本地文件大则启动断点续传
                 {
                     DownLoadFileFromBreakPoint(fileName, filePath ,(int) LocalFileSize);
                     return CloseDataSocket();
@@ -208,9 +227,11 @@ namespace FTPCMD
                     return "Already Finished";
             }
         }
-        /// <summary>
-        /// 向FTP服务器上传文件 name为文件名，path为完整路径名，默认为本地
-        /// </summary>
+        /// <summary>向FTP服务器上传文件</summary>
+        /// <param name="fileName">文件名</param>
+        /// <param name="filePath">完整文件路径，包括文件名；当null时默认本地，默认为null</param>
+        /// <param name="breakPoint">控制上传的大小</param>
+        /// <returns>返回一些上传信息:完成、中断</returns>
         public string UpLoadFile(string fileName,string filePath = null, int breakPoint = 0)//便于测试，加入断点，到断点则停止上传
         {
             if (filePath == null) filePath = fileName;
@@ -260,7 +281,7 @@ namespace FTPCMD
             }
             else//若ftp服务器存在该文件，则检查是否需要断点续传
             {
-                if (FtpFileSize < GetLocalFileSize(filePath))
+                if (FtpFileSize < GetLocalFileSize(filePath))//若服务器文件比本地文件小，则启动断点续传
                 {
                     UpLoadFileFromBreakPoint(fileName, filePath, (int)FtpFileSize);
                     return CloseDataSocket();
@@ -274,9 +295,11 @@ namespace FTPCMD
         #endregion
 
         #region 断点续传
-        /// <summary>
-        /// 断点续传：上传
-        /// </summary>
+        /// <summary>断点续传：上传</summary>
+        /// <param name="fileName">文件名</param>
+        /// <param name="filePath">完整文件路径，包括文件名；当null时默认本地，默认为null</param>
+        /// <param name="breakPoint">已经上传的大小</param>
+        /// /// <returns>返回上传信息</returns>
         public string UpLoadFileFromBreakPoint(string fileName, string filePath, int breakPoint)
         {
             if (filePath == null) filePath = fileName;
@@ -313,9 +336,11 @@ namespace FTPCMD
 
             return "Finished";
         }
-        /// <summary>
-        /// 断点续传:下载
-        /// </summary>
+        /// <summary>断点续传:下载</summary>
+        /// <param name="fileName">文件名</param>
+        /// <param name="filePath">完整文件路径，包括文件名；当null时默认本地，默认为null</param>
+        /// <param name="breakPoint">已经下载的大小</param>
+        /// /// <returns>返回下载信息</returns>
         public string DownLoadFileFromBreakPoint(string fileName,string filePath, int breakPoint)
         {
             if (filePath == null) filePath = fileName;
@@ -345,17 +370,15 @@ namespace FTPCMD
         #endregion
 
         #region 关闭套接字相关
-        /// <summary>
-        /// 关闭数据套接字
-        /// </summary>
+        /// <summary>关闭数据套接字</summary>
+        /// <returns>返回关闭后服务器返回的信息</returns>
         public string CloseDataSocket()
         {
             dataSocket.Close();
             return GetCmdMessage();
         }
-        /// <summary>
-        /// 关闭连接
-        /// </summary>
+        /// <summary>关闭ftp连接</summary>
+        /// <returns>返回关闭后服务器返回的信息</returns>
         public string Close()
         {
             string quitCMD = "QUIT" + CRLF;
@@ -367,24 +390,23 @@ namespace FTPCMD
         #endregion
 
         #region  文件列表相关
-        /// <summary>
-        /// 获取目录下的所有文件名,返回文件名的list
-        /// </summary>
+        /// <summary>获取目录下的所有文件名,返回文件名的list</summary>
+        /// <param name="path">目录路径</param>
+        /// <returns>返回包含文件名的list</returns>
         public List<string> GetLocalFileList(string path)
         {
-            var files = Directory.GetFiles(path, "*.*");
+            var files = Directory.GetFiles(path, "*.*");//所有文件类型
             List<string> fileList = new List<string>();
             foreach (var file in files)
             {
-                string[] temp = Regex.Split(file, @"\\");
+                string[] temp = Regex.Split(file, @"\\");//取得文件名
                 fileList.Add(temp[temp.Length - 1]);
             }
 
             return fileList;
         }
-        /// <summary>
-        /// 获取Ftp服务器的所有文件名,返回文件名的list
-        /// </summary>
+        /// <summary>获取Ftp服务器的所有文件名</summary>
+        /// <returns>返回文件名的list</returns>
         public List<string> GetFtpFileList()
         {
             List<string> ftpFileList = new List<string>();
@@ -409,34 +431,37 @@ namespace FTPCMD
                 string fileName = fileInfoSplit[fileInfoSplit.Length - 1];
                 ftpFileList.Add(fileName.Substring(0,fileName.Length-1));
             }
-            ftpFileList.RemoveAt(ftpFileList.Count-1);
+            ftpFileList.RemoveAt(ftpFileList.Count-1);//丢弃最后一个空白输出
             CloseDataSocket();
             return ftpFileList;
         }
-        /// <summary>
-        /// 返回本地文件大小
-        /// </summary>
+        /// <summary>返回本地文件的大小</summary>
+        /// <param name="fileName">完整文件名，包括路径</param>
+        /// <returns>long型文件大小，单位B</returns>
         public long GetLocalFileSize(string fileName)
         {
-            if (!File.Exists(fileName)) return -1;
+            if (!File.Exists(fileName)) return -1;//文件不存在返回-1
             FileInfo fileInfo = new FileInfo(fileName);
             return fileInfo.Length;
         }
 
-        /// <summary>
-        /// 返回ftp服务器文件大小
-        /// </summary>
+        /// <summary>返回ftp服务器文件大小</summary>
+        /// <param name="fileName">文件名</param>
+        /// <returns>long型文件大小，单位B</returns>
         public long GetFtpFileSize(string fileName)
         {
+            //获取文件大小的命令
             string SizeCMD = "SIZE " + fileName + CRLF;
             cmdSocket.Send(Encoding.UTF8.GetBytes(SizeCMD));
             string message = GetCmdMessage();
+            //获取服务器返回的响应码
             int RCode = GetRCode();
-            if (RCode == 550 || RCode == 451)
+            if (RCode == 550 || RCode == 451)//响应码错误
             {
                 GetCmdMessage();//吞入服务器报错信息
                 return -1;
             }
+            //响应码正确则分割输出
             string[] messageSplit = Regex.Split(message, " ");
             long fileSize = long.Parse(messageSplit[messageSplit.Length - 1]);
             return fileSize;

@@ -14,6 +14,8 @@ namespace FTPCMD
     {
         static void Main(string[] args)
         {
+
+            //Test
             MyFTP myFtp = new MyFTP();
             Console.WriteLine(myFtp.Connect(ConfigurationManager.AppSettings["MyFtpIP"]));
 
