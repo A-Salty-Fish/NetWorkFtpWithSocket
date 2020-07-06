@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace FTPCMD
 {
@@ -39,9 +36,7 @@ namespace FTPCMD
         #region 套接字
         /// <summary>命令套接字</summary>
         private Socket cmdSocket;
-        /// <summary>
-        /// 数据套接字
-        /// </summary>
+        /// <summary>数据套接字</summary>
         private Socket dataSocket;
         #endregion
 
@@ -53,7 +48,7 @@ namespace FTPCMD
             byte[] data = new byte[BufferSize];//新建一个byte数组，用来接收数据
             int length = cmdSocket.Receive(data); //length返回值表示接收了多少字节的数据
             LastMessage = Encoding.UTF8.GetString(data, 0, length); //解码数据
-            
+            Console.WriteLine(LastMessage);
             return LastMessage;
         }
         /// <summary>返回服务器最后返回的响应码</summary>

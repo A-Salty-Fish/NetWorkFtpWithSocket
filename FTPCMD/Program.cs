@@ -14,40 +14,13 @@ namespace FTPCMD
     {
         static void Main(string[] args)
         {
-
             //Test
             MyFTP myFtp = new MyFTP();
-            Console.WriteLine(myFtp.Connect(ConfigurationManager.AppSettings["MyFtpIP"]));
-
-            Console.WriteLine(myFtp.LoginIn(ConfigurationManager.AppSettings["MyUserName"], ConfigurationManager.AppSettings["MyPassWord"]));
-            //Console.WriteLine(myFtp.SetUTF8());
-
-            //Console.WriteLine(myFtp.GetFtpFileSize("www - 副本.ppt"));
-
-            Console.WriteLine(myFtp.GetFtpExtAttr());
-            //Console.WriteLine(myFtp.DownLoadFile("hello3.txt"));
-            //Console.WriteLine(myFtp.GetFtpFileSize("www-副本.ppt"));
-            //Console.WriteLine(myFtp.GetLocalFileSize("www-副本.ppt"));
-            //Console.WriteLine(myFtp.DownLoadFile("www - 副本.ppt", @"E:\C sharp\NetWorkFtpWithSocket\FTPCMD\bin\www - 副本.ppt"));
-            //Console.WriteLine(myFtp.UpLoadFile("www - 副本.ppt", @"E:\C sharp\NetWorkFtpWithSocket\FTPCMD\bin\www - 副本.ppt"));
-            //Console.WriteLine(myFtp.UpLoadFileFromBreakPoint("ttt.pptx", 1500));
-            //List<string> ftpFileList = myFtp.GetFtpFileList();
-            //foreach (var x in ftpFileList)
-            //{
-            //    Console.WriteLine(x);
-            //}
+            myFtp.Connect(ConfigurationManager.AppSettings["MyFtpIP"]);
+            myFtp.LoginIn(ConfigurationManager.AppSettings["MyUserName"], ConfigurationManager.AppSettings["MyPassWord"]);
+            Console.WriteLine(myFtp.DownLoadFileFromBreakPoint("hello3.txt", null, 500));
             //Console.WriteLine(myFtp.CloseDataSocket());
-            //Console.WriteLine(myFtp.SetUTF8(true));
-            //Console.WriteLine(myFtp.GetFtpFileSize("2020课程设计团队实验报告.docx"));
             myFtp.Close();
-            //Console.WriteLine(myFtp.Close());
-            //List<string> localFileList = myFtp.GetLocalFileList(@"E:\C sharp\NetWorkFtpWithSocket\FTPCMD");
-            //foreach (var x in localFileList)
-            //{
-            //    Console.WriteLine(x);
-            //}
-
-
         }
     }
 }
